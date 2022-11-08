@@ -8,7 +8,6 @@ const operators = document.querySelectorAll('.btn-op')
 let firstOperand = ''
 let secondOperand = ''
 let operator = ''
-let resetDisplay = false
 
 numbers.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -58,19 +57,11 @@ let appendOperation = op => {
         displayNow.textContent = `${firstOperand}`
     }
     else {
-        if (operator === '') {
-            secondOperand = Number(displayNow.textContent)
-            operator = op
-            displayBefore.textContent = `${firstOperand} ${operator} ${secondOperand} =`
-            firstOperand = operate(firstOperand, operator, secondOperand)
-            displayNow.textContent = `${firstOperand}`
-        } else {
-            secondOperand = Number(displayNow.textContent)
-            displayBefore.textContent = `${firstOperand} ${operator} ${secondOperand} =`
-            firstOperand = operate(firstOperand, operator, secondOperand)
-            displayNow.textContent = `${firstOperand}`
-            operator = op
-        }
+        secondOperand = Number(displayNow.textContent)
+        firstOperand = operate(firstOperand, operator, secondOperand)
+        operator = op
+        displayBefore.textContent = `${firstOperand} ${operator} `
+        displayNow.textContent = `${firstOperand}`
     }
 }
 
