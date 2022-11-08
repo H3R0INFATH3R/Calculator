@@ -58,12 +58,19 @@ let appendOperation = op => {
         displayNow.textContent = `${firstOperand}`
     }
     else {
-        secondOperand = Number(displayNow.textContent)
-        // secondExists = true
-        operator = op
-        displayBefore.textContent = `${firstOperand} ${operator} ${secondOperand} =`
-        firstOperand = operate(firstOperand, operator, secondOperand)
-        displayNow.textContent = `${firstOperand}`
+        if (operator === '') {
+            secondOperand = Number(displayNow.textContent)
+            operator = op
+            displayBefore.textContent = `${firstOperand} ${operator} ${secondOperand} =`
+            firstOperand = operate(firstOperand, operator, secondOperand)
+            displayNow.textContent = `${firstOperand}`
+        } else {
+            secondOperand = Number(displayNow.textContent)
+            displayBefore.textContent = `${firstOperand} ${operator} ${secondOperand} =`
+            firstOperand = operate(firstOperand, operator, secondOperand)
+            displayNow.textContent = `${firstOperand}`
+            operator = op
+        }
     }
 }
 
