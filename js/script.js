@@ -8,6 +8,7 @@ const operators = document.querySelectorAll('.btn-op')
 let firstOperand = ''
 let secondOperand = ''
 let operator = ''
+let secondUsed = false
 
 numbers.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -23,11 +24,16 @@ operators.forEach(btn => {
 })
 
 compute.addEventListener('click', () => {
-    if (displayNow.textContent !== '' && operator !== '') {
+    if (displayNow.textContent !== '' && operator !== '' && !check) {
         secondOperand = Number(displayNow.textContent)
+        if (secondOperand === 0 && operator === '%') {
+            alert("You can't divide by zero!")
+            return
+        }
         displayBefore.textContent = `${firstOperand} ${operator} ${secondOperand} =`
-        firstOperand = operate(firstOperand, operator, secondOperand);
-        displayNow.textContent = firstOperand;
+        firstOperand = operate(firstOperand, operator, secondOperand)
+        displayNow.textContent = firstOperand.toFixed(2)
+        secondUsed = true
     }
 })
 
@@ -50,18 +56,23 @@ let appendInput = num => {
 }
 
 let appendOperation = op => {
-    if (displayBefore.textContent === '') {
+    if (displayBefore.textContent === '' || secondUsed) {
         firstOperand = Number(displayNow.textContent)
         operator = op
         displayBefore.textContent = `${firstOperand} ${operator}`
         displayNow.textContent = `${firstOperand}`
+        secondUsed = false
     }
     else {
         secondOperand = Number(displayNow.textContent)
+        if (secondOperand === 0 && operator === '%') {
+            alert("You can't divide by zero!")
+            return
+        }
         firstOperand = operate(firstOperand, operator, secondOperand)
         operator = op
         displayBefore.textContent = `${firstOperand} ${operator} `
-        displayNow.textContent = `${firstOperand}`
+        displayNow.textContent = firstOperand.toFixed(2)
     }
 }
 
